@@ -1,40 +1,44 @@
-# Guía de Configuración · Placa de Reseñas de Google — NORTH DRIVE
+# Guías de configuración · Placas NFC — NORTH DRIVE
 
-Sitio web estático de instrucciones para configurar la placa NFC + QR de reseñas de Google
-que vende **North Drive**. Incluye la guía descargable en PDF, un video demostrativo,
-información del producto y dinámicas para conseguir más reseñas.
+Sitio web estático con la guía de configuración (PDF descargable) y el video de cada
+modelo de placa de North Drive. Cada modelo tiene su propia página, para que el código QR
+de cada publicación lleve directo a la guía correcta.
+
+## Páginas (links para los códigos QR)
+
+| Modelo | Ruta | Archivo |
+|---|---|---|
+| Placa en inglés + QR programable | `/` | `index.html` |
+| Placa de reseñas en español (solo NFC) | `/espanol` | `espanol.html` |
+| Placa de menú NFC | `/menu` | `menu.html` |
+
+`vercel.json` activa `cleanUrls`, así que `/espanol` y `/menu` funcionan sin la extensión `.html`.
 
 ## Contenido
 
 ```
 sitio-web/
-├─ index.html          # Página única (HTML/CSS/JS embebidos, sin dependencias)
-├─ guia/               # Guía de configuración en PDF (descargable)
-├─ video/              # Video demostrativo optimizado (MP4)
-└─ img/                # Logo, foto de la placa y miniaturas
+├─ index.html · espanol.html · menu.html   # una página por modelo (HTML/CSS/JS embebidos)
+├─ vercel.json
+├─ guia/    # PDFs de configuración (uno por modelo)
+├─ video/   # videos de configuración optimizados (MP4, 720p)
+└─ img/     # logo, fotos de las placas, portadas y miniaturas
 ```
 
 ## Ver en local
 
-Como el navegador bloquea `file://`, sirve la carpeta con un servidor local:
+El navegador bloquea `file://`, así que sirve la carpeta con un servidor local:
 
 ```bash
-# Python
 python -m http.server 8000
-# o Node
-npx serve .
 ```
 
-Luego abre http://localhost:8000
+Luego abre http://localhost:8000 (en local usa `/espanol.html` y `/menu.html`).
 
 ## Publicar en Vercel
 
-1. Sube este repositorio a GitHub.
-2. En [vercel.com](https://vercel.com) → **Add New → Project** → importa el repo.
-3. Framework Preset: **Other** (sitio estático). No requiere build.
-   - Build Command: *(vacío)*
-   - Output Directory: `.` (raíz)
-4. **Deploy**. Vercel te dará la URL pública para el código QR.
+Con el repositorio importado en Vercel, cada `git push` a `main` actualiza el sitio.
+Framework Preset: **Other**, sin build command, Output Directory `.`.
 
 ---
 
